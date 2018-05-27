@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/form/input', 'IndexController@input');
+Route::post('/form/res', 'IndexController@res');
