@@ -13,26 +13,11 @@ class IndexController extends Controller
         return view('input');
     }
 
-    public function res()
+    public function res(Request $request)
     {
-        $input = Input::all();
+        $name = $request->input('name');
+        $todo = $request->input('todo');
 
-        $rules = [
-            'name' => 'require',
-            'todo' => 'require',
-        ];
-
-        $messages = [
-            'name.require' => '名前を入力してください。',
-            'todo.require' => '内容を入力してください。',
-        ];
-
-        $validation = Validator::make($input, $rules, $messages);
-
-        if ($validation->fails()) {
-            return redirect()->back()->withErrors($validation->errors())->withInput();
-        }
-
-        return view('input');
+        return view('input', compact('name', 'todo'));
     }
 }

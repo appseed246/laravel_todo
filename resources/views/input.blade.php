@@ -9,10 +9,15 @@ input
 <form action="{{action('IndexController@res')}}" method="post">
 name: <input type="input" name="name" value="{{old('name')}}"><br>
 todo: <input type="input" name="todo" value="{{old('todo')}}"><br>
+<input type="hidden" name="_token" value="{{csrf_token()}}">
 <input type="submit" value="SEND">
 </form>
 <div>
-{{$errors->first('name')}}
-{{$errors->first('todo')}}
+@if (isset($name))
+    <p>{{$name}}</p>
+@endif
+@if (isset($todo))
+    <p>{{$todo}}</p>
+@endif
 </div>
 @stop
