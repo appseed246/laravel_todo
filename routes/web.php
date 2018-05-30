@@ -14,5 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/form/input', 'IndexController@input');
-Route::post('/form/res', 'IndexController@res');
+Route::prefix('form')->group(function() {
+    Route::get('input', 'IndexController@input');
+    Route::match(['get', 'post'], 'confirm', 'IndexController@confirm');
+    Route::post('commit', 'IndexController@commit');
+});
