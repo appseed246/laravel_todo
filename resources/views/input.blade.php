@@ -25,7 +25,11 @@ Todoリスト
         <div>{{$errors->first('task')}}</div>
     </div>
     <br>
-    <input type="hidden" name="_token" value="{{csrf_token()}}">
-    <input type="submit" value="SEND">
+    <div>
+    期限: <input type="date" name="limit" value="{{old('limit')}}">
+    <div>{{$errors->first('limit')}}</div>
+    {{-- <input type="hidden" name="_token" value="{{csrf_token()}}"> --}}
+    {{ csrf_field() }}
+    <input type="submit" value="内容確認">
 </form>
 @stop

@@ -7,6 +7,9 @@
 @section('body')
 名前: {{$input['name']}}<br>
 タスク: {{$input['task']}}<br>
+@if (isset($input['limit']))
+期限: {{$input['limit']}}<br>
+@endif
 
 この内容で登録を行います。よろしいですか？
 <form action="{{action('IndexController@commit')}}" method="post">
