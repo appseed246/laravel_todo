@@ -40,7 +40,7 @@ class IndexController extends Controller
         $task = new Task;
         $task->name = $request->name;
         $task->content = $request->content;
-        $task->limit = $task->limit;
+        $task->limit = $request->limit;
 
         // 登録エラー時にメッセージ表示
         try {
