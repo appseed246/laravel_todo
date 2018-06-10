@@ -17,19 +17,19 @@ Route::get('/', function () {
 
 // タスク入力ページ
 Route::prefix('form')->group(function() {
-    Route::get('/input', 'IndexController@input');
-    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm');
-    Route::post('/commit', 'IndexController@commit');
+    Route::get('/input', 'IndexController@input')->name('form.input');
+    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm')->name('form.confirm');
+    Route::post('/commit', 'IndexController@commit')->name('form.commit');
 });
 
 // 管理ページ
 Route::prefix('admin')->group(function () {
-    Route::get('/', 'AdminController@index');
-    Route::post('/login', 'AdminController@login');
-    Route::get('/home', 'AdminController@home');
+    Route::get('/', 'AdminController@index')->name('admin.top');
+    Route::post('/login', 'AdminController@login')->name('admin.login');
+    Route::get('/home', 'AdminController@home')->name('admin.home');
 });
 
-Route::prefix('/login', '');
+//Route::prefix('/login', '');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

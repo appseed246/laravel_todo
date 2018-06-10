@@ -7,6 +7,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -20,11 +22,14 @@ class AdminController extends Controller
 
     /**
      * ログイン処理
-     * @param LoginRequest
+     * @param $request LoginRequest
      */
-    public function login()
+    public function login(LoginRequest $request)
     {
-        return redirect('/admin/home');
+        if (Auth::attempt(['name' => $request->id, 'password' => $request->password])) {
+            return redirect()->route('admin.home');
+        }
+        return redirect()->back()->with('status', "IDかパスワードが間違っています");
     }
     /**
      * トップページ
