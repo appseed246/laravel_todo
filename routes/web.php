@@ -14,11 +14,22 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// タスク入力ページ
 Route::prefix('form')->group(function() {
-    Route::get('input', 'IndexController@input');
-    Route::match(['get', 'post'], 'confirm', 'IndexController@confirm');
-    Route::post('commit', 'IndexController@commit');
-    Route::delete('/task/{id}', function ($id) {
-       //
-    });
+    Route::get('/input', 'IndexController@input');
+    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm');
+    Route::post('/commit', 'IndexController@commit');
 });
+
+// 管理ページ
+Route::prefix('admin')->group(function () {
+    Route::get('/', 'AdminController@index');
+    Route::post('/login', 'AdminController@login');
+    Route::get('/home', 'AdminController@home');
+});
+
+Route::prefix('/login', '');
+
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
