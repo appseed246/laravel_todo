@@ -26,7 +26,6 @@
     </div>
     <button type="submit" id="submit" class="btn btn-info mx-auto d-block">内容確認</button>
 </form>
-<br>
 <table class="table table-striped">
     <thead>
         <th scope="col">No.</th>
@@ -37,18 +36,18 @@
     <tbody>
         @foreach ($tasks as $task)
         <tr>
-            <th scope="row">
+            <td>
                 {{ $task->id }}
-                </td>
-                <td>
-                    {{ $task->name }}
-                </td>
-                <td>
-                    {{ $task->content }}
-                </td>
-                <td>
-                    @if(is_null($task->limit)) なし @else {{ $task->limit }} @endif
-                </td>
+            </td>
+            <td>
+                {{ $task->user->name }}
+            </td>
+            <td>
+                {{ $task->content }}
+            </td>
+            <td>
+                @if(is_null($task->limit)) なし @else {{ $task->limit }} @endif
+            </td>
         </tr>
         @endforeach
     </tbody>

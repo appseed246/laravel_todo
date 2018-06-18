@@ -26,7 +26,11 @@ class IndexController extends Controller
      */
     public function confirm(InputRequest $request)
     {
-        $request->flash();
+        session([
+            "name" => $request->name,
+            "content" => $request->content,
+            "limit" => $request->limit
+        ]);
         return view('confirm', ['request' => $request]);
     }
 
@@ -36,11 +40,12 @@ class IndexController extends Controller
      */
     public function commit(Request $request)
     {
-        // タスクの登録
+        $data = $request->session()->all();
+        
         $task = new Task;
-        $task->name = $request->name;
-        $task->content = $request->content;
-        $task->limit = $request->limit;
+        $task->name = $data['name'];
+        $task->content = $data['content'];
+        $task->limit = $data['limit'];
 
         // 登録エラー時にメッセージ表示
         try {
@@ -51,6 +56,9 @@ class IndexController extends Controller
             ]);
         }
         
+        // セッションの破棄
+        $request->session()->flush();
+
         // 登録完了時にTOPに戻る
         return redirect('form/input')->with('status', '登録が完了しました。');
     }

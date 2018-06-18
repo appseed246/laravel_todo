@@ -16,10 +16,12 @@ class CreateTasksTable extends Migration
         Schema::dropIfExists('tasks');
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->unsignedInteger('user_id');
             $table->string('content');
             $table->dateTime('limit')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
