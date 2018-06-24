@@ -12,14 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //return view('welcome');
+    return redirect()->route('user.login');
 });
 
 // タスク入力ページ
-Route::prefix('form')->group(function() {
-    Route::get('/input', 'IndexController@input')->name('form.input');
-    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm')->name('form.confirm');
-    Route::post('/commit', 'IndexController@commit')->name('form.commit');
+Route::prefix('user')->group(function() {
+    Route::get('/', function() {
+        return redirect()->route('user.login');
+    });
+    Route::get('/login', function() {
+        return redirect()->route('user.input');
+    })->name('user.login');
+    Route::get('/home', 'IndexController@input')->name('user.input');
+    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm')->name('user.confirm');
+    Route::post('/commit', 'IndexController@commit')->name('user.commit');
 });
 
 // 管理ページ

@@ -1,4 +1,4 @@
-@extends('master') 
+@extends('layouts.master') 
 @section('title', 'ログイン') 
 @section('body')
 <div class="row">

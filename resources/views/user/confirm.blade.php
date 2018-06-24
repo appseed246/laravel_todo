@@ -1,4 +1,4 @@
-@extends('master') 
+@extends('layouts.master') 
 @section('title', '確認画面') 
 @section('body')
 <form action="{{action('IndexController@commit')}}" method="post">

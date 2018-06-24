@@ -1,4 +1,4 @@
-@extends('master') 
+@extends('layouts.master') 
 @section('title', 'Todoリスト') 
 @section('body')
 <h1 class="text-center">Todo List</h1>

@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InputRequest;
 use App\Task;
+use function foo\func;
 
 class IndexController extends Controller
 {
+    public function login()
+    {
+        return view('user.login');
+    }
+
     /**
      * タスク登録画面
      */
@@ -16,7 +22,7 @@ class IndexController extends Controller
     {
         $tasks = Task::orderBy('created_at', 'asc')->get();
 
-        return view('input', [
+        return view('user.input', [
             'tasks' => $tasks
         ]);
     }
@@ -31,7 +37,7 @@ class IndexController extends Controller
             "content" => $request->content,
             "limit" => $request->limit
         ]);
-        return view('confirm', ['request' => $request]);
+        return view('user.confirm', ['request' => $request]);
     }
 
     /**
@@ -41,25 +47,30 @@ class IndexController extends Controller
     public function commit(Request $request)
     {
         $data = $request->session()->all();
-        
+
         $task = new Task;
         $task->name = $data['name'];
+        //$task->user_id = "XXXX";
         $task->content = $data['content'];
         $task->limit = $data['limit'];
 
         // 登録エラー時にメッセージ表示
         try {
             $task->save();
-        } catch(\PDOException $e) {
-            return redirect('form/input')->with([
-                'status' => "エラーが発生しました。"
-            ]);
+        } catch (\PDOException $e) {
+            return redirect()
+                ->route('user.input')
+                ->with([
+                    'status' => "エラーが発生しました。"
+                ]);
         }
         
         // セッションの破棄
         $request->session()->flush();
 
         // 登録完了時にTOPに戻る
-        return redirect('form/input')->with('status', '登録が完了しました。');
+        return redirect()
+            ->route('user.input')
+            ->with('status', '登録が完了しました。');
     }
 }
