@@ -40,7 +40,7 @@
                 {{ $task->id }}
             </td>
             <td>
-                {{ $task->user->name }}
+                {{ $task->user->profile->fullname }}
             </td>
             <td>
                 {{ $task->content }}

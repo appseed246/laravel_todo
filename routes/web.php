@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     //return view('welcome');
@@ -17,8 +17,8 @@ Route::get('/', function () {
 });
 
 // タスク入力ページ
-Route::prefix('user')->namespace('User')->as('user.')->group(function() {
-    Route::get('/', function() {
+Route::prefix('user')->namespace('User')->as('user.')->group(function () {
+    Route::get('/', function () {
         return redirect()->route('user.login');
     });
     Route::get('/', 'IndexController@index')->name('index');
