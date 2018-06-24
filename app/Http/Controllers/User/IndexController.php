@@ -9,9 +9,14 @@ use App\Task;
 
 class IndexController extends Controller
 {
+    public function index()
+    {
+        return view('common.auth', ['route_name' => 'user.login']);
+    }
+
     public function login()
     {
-        return view('user.login');
+        return redirect()->back()->with('status', "IDかパスワードが間違っています");
     }
 
     /**

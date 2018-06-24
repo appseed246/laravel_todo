@@ -18,7 +18,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('auth');
+        return view('common.auth', ['route_name' => 'admin.login']);
     }
 
     /**

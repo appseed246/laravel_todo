@@ -9,7 +9,7 @@
             {{session('status')}}
         </div>
         @endif
-        <form action="{{ route('admin.login') }}" method="post">
+        <form action="{{ route($route_name) }}" method="post">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="id" class="control-label">ID</label>
