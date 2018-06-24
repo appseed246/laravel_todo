@@ -17,23 +17,23 @@ Route::get('/', function () {
 });
 
 // タスク入力ページ
-Route::prefix('user')->group(function() {
+Route::prefix('user')->namespace('User')->as('user.')->group(function() {
     Route::get('/', function() {
         return redirect()->route('user.login');
     });
     Route::get('/login', function() {
         return redirect()->route('user.input');
     })->name('user.login');
-    Route::get('/home', 'IndexController@input')->name('user.input');
-    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm')->name('user.confirm');
-    Route::post('/commit', 'IndexController@commit')->name('user.commit');
+    Route::get('/home', 'IndexController@input')->name('input');
+    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm')->name('confirm');
+    Route::post('/commit', 'IndexController@commit')->name('commit');
 });
 
 // 管理ページ
-Route::prefix('admin')->group(function () {
-    Route::get('/', 'AdminController@index')->name('admin.top');
-    Route::post('/login', 'AdminController@login')->name('admin.login');
-    Route::get('/home', 'AdminController@home')->name('admin.home');
+Route::prefix('admin')->namespace('Admin')->as('admin.')->group(function () {
+    Route::get('/', 'AdminController@index')->name('top');
+    Route::post('/login', 'AdminController@login')->name('login');
+    Route::get('/home', 'AdminController@home')->name('home');
 });
 
 //Route::prefix('/login', '');

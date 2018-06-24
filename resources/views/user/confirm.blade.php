@@ -1,7 +1,7 @@
 @extends('layouts.master') 
 @section('title', '確認画面') 
 @section('body')
-<form action="{{action('IndexController@commit')}}" method="post">
+<form action="{{ route('user.commit') }}" method="post">
     <div>
         名前: {{$request->name}}
     </div>
@@ -17,7 +17,7 @@
         この内容で登録を行います。よろしいですか？
     </div>
     <input type="submit" value="登録">
-    <input type="button" onClick="location.href='{{action('IndexController@input')}}'" value="修正"> {{ csrf_field() }}
+    <input type="button" onClick="location.href='{{ route('user.input') }}'" value="修正"> {{ csrf_field() }}
 </form>
 
 

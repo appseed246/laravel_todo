@@ -7,7 +7,7 @@
     {{session('status')}}
 </div>
 @endif
-<form action="{{action('IndexController@confirm')}}" method="post">
+<form action="{{ route('user.confirm') }}" method="post">
     {{ csrf_field() }}
     <div class="form-group">
         <label for="name" class="control-label">名前</label>
