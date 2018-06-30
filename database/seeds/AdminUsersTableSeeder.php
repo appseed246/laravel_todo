@@ -12,8 +12,8 @@ class AdminUsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('admin_users')->insert([
-            'name' => 'admin',
-            'password' => bcrypt('admin')
+            'login_id' => 'admin',
+            'password' => bcrypt('system')
         ]);
     }
 }

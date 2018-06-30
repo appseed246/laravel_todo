@@ -30,12 +30,13 @@ Route::prefix('user')->namespace('User')->as('user.')->group(function () {
 
 // 管理ページ
 Route::prefix('admin')->namespace('Admin')->as('admin.')->group(function () {
-    Route::get('/', 'AdminController@index')->name('top');
-    Route::post('/login', 'AdminController@login')->name('login');
-    Route::get('/home', 'AdminController@home')->name('home');
+    Route::get('/', function () {
+        return redirect()->route('admin.login');
+    });
+    Route::post('/login', 'LoginController@login')->name('doLogin');
+    Route::get('/login', 'LoginController@showLoginForm')->name('login');
+    Route::post('/logout', 'LoginController@logout')->name('logout');
+    Route::group(['middleware' => 'auth:admin'], function () {
+        Route::get('/home', 'HomeController@index')->name('home');
+    }); 
 });
-
-//Route::prefix('/login', '');
-
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');

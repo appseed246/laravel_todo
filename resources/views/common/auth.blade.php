@@ -9,12 +9,12 @@
             {{session('status')}}
         </div>
         @endif
-        <form action="{{ route($route_name) }}" method="post">
+        <form action="{{ route('admin.doLogin') }}" method="post">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="id" class="control-label">ID</label>
-                <input type="text" class="form-control" id="id" name="id" value="{{old('id')}}">
-                <div class="text-danger">{{$errors->first('id')}}</div>
+                <input type="text" class="form-control" id="login_id" name="login_id" value="{{old('login_id')}}">
+                <div class="text-danger">{{$errors->first('login_id')}}</div>
             </div>
             <div class="form-group">
                 <label for="password" class="control-label">パスワード</label>
