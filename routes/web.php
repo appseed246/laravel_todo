@@ -16,16 +16,20 @@ Route::get('/', function () {
     return redirect()->route('user.login');
 });
 
-// タスク入力ページ
-Route::prefix('user')->namespace('User')->as('user.')->group(function () {
+// ユーザーページ
+Route::namespace('User')->as('user.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('user.login');
     });
-    Route::get('/', 'IndexController@index')->name('index');
-    Route::post('/login', 'IndexController@login')->name('login');
-    Route::get('/home', 'IndexController@input')->name('input');
-    Route::match(['get', 'post'], '/confirm', 'IndexController@confirm')->name('confirm');
-    Route::post('/commit', 'IndexController@commit')->name('commit');
+    Route::get('/login', 'LoginController@showLoginForm')->name('login');
+    Route::post('/login', 'LoginController@login')->name('doLogin');
+    Route::match(['get', 'post'], '/logout', 'LoginController@logout')->name('logout');
+
+    Route::group(['middleware' => 'auth:user'], function () {
+        Route::get('/home', 'IndexController@input')->name('home');
+        Route::match(['get', 'post'], '/confirm', 'IndexController@confirm')->name('confirm');
+        Route::post('/commit', 'IndexController@commit')->name('commit');
+    });
 });
 
 // 管理ページ
@@ -35,8 +39,8 @@ Route::prefix('admin')->namespace('Admin')->as('admin.')->group(function () {
     });
     Route::post('/login', 'LoginController@login')->name('doLogin');
     Route::get('/login', 'LoginController@showLoginForm')->name('login');
-    Route::post('/logout', 'LoginController@logout')->name('logout');
+    Route::match(['get', 'post'], '/logout', 'LoginController@logout')->name('logout');
     Route::group(['middleware' => 'auth:admin'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
-    }); 
+    });
 });

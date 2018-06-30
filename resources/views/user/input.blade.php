@@ -1,4 +1,4 @@
-@extends('layouts.master') 
+@extends('layouts.user.master') 
 @section('title', 'Todoリスト') 
 @section('body')
 <h1 class="text-center">Todo List</h1>
@@ -9,11 +9,6 @@
 @endif
 <form action="{{ route('user.confirm') }}" method="post">
     {{ csrf_field() }}
-    <div class="form-group">
-        <label for="name" class="control-label">名前</label>
-        <input type="input" class="form-control" id="name" name="name" value="{{old('name')}}">
-        <div class="text-danger">{{$errors->first('name')}}</div>
-    </div>
     <div class="form-group">
         <label for="content" class="control-label">タスク</label>
         <input type="input" class="form-control" id="content" name="content" value="{{old('content')}}">
@@ -29,7 +24,6 @@
 <table class="table table-striped">
     <thead>
         <th scope="col">No.</th>
-        <th scope="col">登録者</th>
         <th scope="col">タスク</th>
         <th scope="col">期限</th>
     </thead>
@@ -37,10 +31,7 @@
         @foreach ($tasks as $task)
         <tr>
             <td>
-                {{ $task->id }}
-            </td>
-            <td>
-                {{ $task->user->profile->fullname }}
+                {{ $loop->iteration }}
             </td>
             <td>
                 {{ $task->content }}

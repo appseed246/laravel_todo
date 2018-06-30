@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin.master')
 @section('title', 'home')
 @section('body')
 <h1>ログインしました</h1>

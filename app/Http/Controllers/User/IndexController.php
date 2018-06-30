@@ -6,25 +6,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\InputRequest;
 use App\Task;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
-    public function index()
-    {
-        return view('common.auth', ['route_name' => 'user.login']);
-    }
-
-    public function login()
-    {
-        return redirect()->back()->with('status', "IDかパスワードが間違っています");
-    }
-
     /**
      * タスク登録画面
      */
     public function input()
     {
-        $tasks = Task::orderBy('created_at', 'asc')->get();
+        $tasks = Task::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'asc')
+            ->get();
 
         return view('user.input', [
             'tasks' => $tasks
@@ -37,11 +30,12 @@ class IndexController extends Controller
     public function confirm(InputRequest $request)
     {
         session([
-            "name" => $request->name,
-            "content" => $request->content,
-            "limit" => $request->limit
+            "input" => [
+                "content" => $request->content,
+                "limit" => $request->limit
+            ],
         ]);
-        return view('user.confirm', ['request' => $request]);
+            return view('user.confirm', ['request' => $request]);
     }
 
     /**
@@ -53,28 +47,27 @@ class IndexController extends Controller
         $data = $request->session()->all();
 
         $task = new Task;
-        $task->name = $data['name'];
-        //$task->user_id = "XXXX";
-        $task->content = $data['content'];
-        $task->limit = $data['limit'];
+        $task->user_id = Auth::user()->id;
+        $task->content = $data['input']['content'];
+        $task->limit = $data['input']['limit'];
 
         // 登録エラー時にメッセージ表示
         try {
             $task->save();
         } catch (\PDOException $e) {
             return redirect()
-                ->route('user.input')
+                ->route('user.home')
                 ->with([
                     'status' => "エラーが発生しました。"
                 ]);
         }
         
         // セッションの破棄
-        $request->session()->flush();
+        $request->session()->forget('input');
 
         // 登録完了時にTOPに戻る
         return redirect()
-            ->route('user.input')
+            ->route('user.home')
             ->with('status', '登録が完了しました。');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/home';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -36,19 +36,19 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:user')->except('logout');
     }
 
     public function showLoginForm()
     {
         return view('layouts.auth', [
-            'route_name' => 'admin.doLogin'
+            'route_name' => 'user.doLogin',
         ]);
     }
 
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard('user');
     }
 
     public function username()
@@ -68,6 +68,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect()->route('admin.login');
+        return redirect()->route('user.login');
     }
 }

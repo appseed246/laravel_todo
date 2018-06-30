@@ -23,7 +23,6 @@ class InputRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100',
             'content' => 'required|max:255',
             'limit' => 'nullable|date_format:"Y-m-d H:i:s"|after:now',
         ];
@@ -36,9 +35,6 @@ class InputRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '名前を入力してください',
-            'name.string' => '名前は文字列で入力してください',
-            'name.max' => '名前の文字数が長すぎます',
             'content.required' => 'タスクを入力してください',
             'content.string' => 'タスク内容が長すぎます',
             'limit.date_format' => '入力値のフォーマットが不正です(YYYY-MM-DD HH:MM:SS)',
